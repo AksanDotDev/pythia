@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 # Project Ignore
-pythia.config.ini
+config.py
+
