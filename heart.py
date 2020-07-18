@@ -3,7 +3,6 @@
 import discord
 from config import config
 
-
 client = discord.Client()
 
 @client.event
@@ -20,6 +19,7 @@ async def on_message(message):
 
     if client.user.mentioned_in(message):
         await message.channel.send("Hello!")
+
 
 
 client.run(config.discord.token)
