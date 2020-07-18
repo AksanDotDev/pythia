@@ -1,19 +1,8 @@
 #!/usr/bin/env python
 
-import configparser
 import discord
-from collections import Counter
-from os import path
-import hashlib
+from config import config
 
-configFileName = "astria.config.ini"
-
-config = configparser.ConfigParser()
-if path.isfile(configFileName):
-    config.read(configFileName)
-else:
-    print("No config found")
-    exit(1)
 
 client = discord.Client()
 
@@ -33,4 +22,4 @@ async def on_message(message):
         await message.channel.send("Hello!")
 
 
-client.run(config.get("core", "token"))
+client.run(config.discord.token)
