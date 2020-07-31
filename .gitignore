@@ -130,3 +130,5 @@ dmypy.json
 
 # Project Ignore
 config.py
+
+.vscode/settings.json

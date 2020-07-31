@@ -3,7 +3,6 @@
 import discord
 from config import config
 
-
 client = discord.Client()
 
 
