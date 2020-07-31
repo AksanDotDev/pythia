@@ -1,8 +1,8 @@
 from munch import Munch
 
 params : {
-    "discord" : {
-        "token" : FromDiscord
+    "discord": {
+        "token": FromDiscord
     }
 }
 
