@@ -16,9 +16,10 @@ class Cogical(commands.Cog):
     )
     async def print_chars(self, ctx):
         await ctx.send(
-            " ".join(map(str, Symbol)) 
+            " ".join(map(str, Symbol))
             + " " +
-            " ".join(map(str, Boolean)) )
+            " ".join(map(str, Boolean))
+        )
 
     @commands.command(
         name="Get Truth Table",
