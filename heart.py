@@ -1,26 +1,17 @@
-#!/usr/bin/env python
-
-import discord
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from discord.ext import commands
 from config import config
+from cogical import Cogical
 
-client = discord.Client()
-
-
-@client.event
-async def on_ready():
-    print('Online as {0.user}'.format(client))
+Pythia = commands.Bot(command_prefix=commands.when_mentioned)
 
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+@Pythia.command(name="Marco")
+async def marco_polo(ctx):
+    await ctx.send("Polo!")
 
-    if message.content.lower() == "marco":
-        await message.channel.send("Polo!")
+Pythia.add_cog(Cogical(Pythia))
 
-    if client.user.mentioned_in(message):
-        await message.channel.send("Hello!")
-
-
-client.run(config.discord.token)
+Pythia.run(config.discord.token, bot=True, reconnect=True)
