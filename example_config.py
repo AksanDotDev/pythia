@@ -1,6 +1,6 @@
 from munch import Munch
 
-params : {
+params = {
     "discord": {
         "token": FromDiscord
     }
