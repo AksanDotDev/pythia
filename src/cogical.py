@@ -11,7 +11,20 @@ class Cogical(commands.Cog):
         self.bot = bot
 
     @commands.command(
-        name="Get Logical Characters",
+        name="Logic",
+        aliases=["l", "logi"]
+    )
+    async def logic(self, ctx, *args):
+        n = len(args)
+        if n == 0:
+            await self.print_chars(ctx)
+        elif n == 1:
+            await self.truth_table(ctx, *args)
+        else:
+            await ctx.send("Sorry, still learning, can't handle that yet.")
+
+    @commands.command(
+        name="Symbols",
         aliases=["glc", "logichars"]
     )
     async def print_chars(self, ctx):
@@ -22,33 +35,15 @@ class Cogical(commands.Cog):
         )
 
     @commands.command(
-        name="Get Truth Table",
-        aliases=["gtt", "truth table"]
+        name="Truth",
+        aliases=["gtt"]
     )
-    async def truth_table(self, ctx, arg):
+    async def truth_table(self, ctx, arg: str):
         symbol = get_symbol(arg)
-        sym_sig = signature(symbol._function_)
-        table = " " + " | ".join(sym_sig.parameters.keys()) + " | "
-        if len(sym_sig.parameters) == 2:
-            table += f" {str(symbol)} ".join(sym_sig.parameters.keys())
+        if symbol:
+            await ctx.send("```" + get_symbol_truth_table(symbol) + "```")
         else:
-            table += str(symbol) + "".join(sym_sig.parameters.keys())
-        table += "\n" + (len(table) + 1)*"="
-        for i in range(2 ** len(sym_sig.parameters)):
-            table += "\n"
-            args = []
-            for j in range(len(sym_sig.parameters)):
-                if j:
-                    table += " |"
-                value = Boolean.TRUE if i & (j + 1) else Boolean.FALSE
-                table += f" {str(value)}"
-                args.append(value._bool_)
-            table += " |"
-            table += "  " if len(sym_sig.parameters) == 1 else "   "
-            result = get_boolean_bool(symbol._function_(*args))
-            table += result._symbol_
-
-        await ctx.send("```" + table + "```")
+            await ctx.send("I can't make a truth table for that.")
 
 
 def get_symbol(term: str):
@@ -59,6 +54,30 @@ def get_symbol(term: str):
             return symbol
     else:
         return None
+
+
+def get_symbol_truth_table(symbol):
+    sym_sig = signature(symbol._function_)
+    table = " " + " | ".join(sym_sig.parameters.keys()) + " | "
+    if len(sym_sig.parameters) == 2:
+        table += f" {str(symbol)} ".join(sym_sig.parameters.keys())
+    else:
+        table += str(symbol) + "".join(sym_sig.parameters.keys())
+    table += "\n" + (len(table) + 1)*"="
+    for i in range(2 ** len(sym_sig.parameters)):
+        table += "\n"
+        args = []
+        for j in range(len(sym_sig.parameters)):
+            if j:
+                table += " |"
+            value = Boolean.TRUE if i & (j + 1) else Boolean.FALSE
+            table += f" {str(value)}"
+            args.append(value._bool_)
+        table += " |"
+        table += "  " if len(sym_sig.parameters) == 1 else "   "
+        result = get_boolean_bool(symbol._function_(*args))
+        table += result._symbol_
+    return table
 
 
 def get_boolean_bool(term: bool):
@@ -100,3 +119,12 @@ class Symbol(IntEnum):
 
     def __str__(self):
         return self._symbol_
+
+
+class Sentence(object):
+
+    def validate(self):
+        pass
+
+    def evaluate(self):
+        pass
