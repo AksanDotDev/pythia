@@ -1,7 +1,7 @@
 usefuls = {
     "curls": {
         "```curl -h```"
-    }
+    },
     "bins": {
         "Wednesdays"
     }
