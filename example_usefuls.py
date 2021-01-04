@@ -1,3 +1,5 @@
+from munch import Munch
+
 usefuls = {
     "curls": {
         "```curl -h```"
