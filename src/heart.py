@@ -5,6 +5,7 @@ from discord.ext import commands
 from config import config
 from cogical import Cogical
 from wake import Wake
+from useful import Useful
 import time
 
 Pythia = commands.Bot(
@@ -46,5 +47,6 @@ async def actual(ctx, arg: str):
 
 Pythia.add_cog(Cogical(Pythia))
 Pythia.add_cog(Wake(Pythia))
+Pythia.add_cog(Useful(Pythia))
 
 Pythia.run(config.discord.token, bot=True, reconnect=True)
