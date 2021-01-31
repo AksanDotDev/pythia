@@ -129,6 +129,5 @@ dmypy.json
 .pyre/
 
 # Project Ignore
-config.py
-
 .vscode/settings.json
+__env__
