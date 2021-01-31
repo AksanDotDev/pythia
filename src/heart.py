@@ -2,12 +2,12 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from discord.ext import commands
-from config import config
-from cogical import Cogical
 from wake import Wake
-from useful import Useful
-
+from memory import Memory, Configuration, init_db
 import time
+
+cogs = [Wake, Memory, Configuration]
+
 
 Pythia = commands.Bot(
     command_prefix=commands.when_mentioned,
@@ -46,9 +46,12 @@ async def actual(ctx, arg: str):
     if arg == "help":
         await ctx.send_help()
 
-Pythia.add_cog(Cogical(Pythia))
-Pythia.add_cog(Wake(Pythia))
-Pythia.add_cog(Useful(Pythia))
+if __name__ == "__main__":
+    init_db()
+    for cog in cogs:
+        Pythia.add_cog(cog(Pythia))
 
+    with open("/__env__/bot.key") as key:
+        token = key.read()
 
-Pythia.run(config.discord.token, bot=True, reconnect=True)
+    Pythia.run(token, bot=True, reconnect=True)
