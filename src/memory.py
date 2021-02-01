@@ -59,7 +59,7 @@ class Memory(commands.Cog):
         aliases=["query", "load"],
     )
     async def show_useful(self, ctx, key: str):
-        if result := self.session.query(Useful).filter(
+        if result := self.session.query(Useful.useful_msg).filter(
                     Useful.useful_key == key
                 ).one_or_none():
             await pagified_send(ctx, result.useful_msg)
