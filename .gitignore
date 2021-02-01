@@ -131,3 +131,4 @@ dmypy.json
 # Project Ignore
 .vscode/settings.json
 __env__
+*.ps1 
