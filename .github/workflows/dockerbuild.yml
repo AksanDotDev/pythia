@@ -2,7 +2,8 @@ name: ci
 
 on:
   release:
-    published
+    types:
+      - published
 
 jobs:
   make-image:
