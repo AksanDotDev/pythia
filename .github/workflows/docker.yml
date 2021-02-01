@@ -2,8 +2,6 @@ name: Docker Build
 
 on:
   push:
-    branches:
-      core
 
 jobs:
   build-and-publish-latest:
