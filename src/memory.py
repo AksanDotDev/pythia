@@ -325,4 +325,3 @@ class Configuration(commands.Cog):
                 + f" - mac_address : {entry.mac_address}\n\n"
             )
         await pagified_send(ctx, msg, code_block=True)
-
