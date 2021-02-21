@@ -1,16 +1,17 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-from discord.ext import commands
+from discord.ext.commands import Bot, when_mentioned
 from wake import Wake
-from memory import Memory, Configuration, init_db
+from memory import Memory, Configuration, init_db, db_session
+from memory_utilities import get_config
 import time
 
 cogs = [Wake, Memory, Configuration]
 
 
-Pythia = commands.Bot(
-    command_prefix=commands.when_mentioned,
+Pythia = Bot(
+    command_prefix=when_mentioned,
     case_insensitive=True
     )
 
@@ -37,14 +38,36 @@ async def false_help(ctx):
     false_help._last_call = this_call
 
 
-@Pythia.command(
+@Pythia.group(
     name="Actual",
-    aliases=["Real", "R"],
+    case_insensitive=True,
+    invoke_without_command=True,
+    pass_context=True,
     hidden=True
 )
-async def actual(ctx, arg: str):
-    if arg == "help":
-        await ctx.send_help()
+async def actual(ctx):
+    name = get_config(db_session(), "true_name")
+    if Pythia.user.name == name:
+        await ctx.send(f"I am {name} actual.")
+    else:
+        await ctx.send("I am not really feeling myself.")
+
+
+@actual.command(
+    name="Help"
+)
+async def real_help(ctx):
+    await ctx.send_help()
+
+
+@actual.command(
+    name="Name"
+)
+async def full_name(ctx):
+    if full_name := get_config(db_session(), "full_name"):
+        await ctx.send(f"I am {full_name}.")
+    else:
+        await ctx.send("My name is unimportant.")
 
 if __name__ == "__main__":
     init_db()
