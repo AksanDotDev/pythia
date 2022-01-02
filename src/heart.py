@@ -3,11 +3,12 @@ from __future__ import division
 from __future__ import print_function
 from discord.ext.commands import Bot, when_mentioned
 from wake import Wake
+from teryte import Teryte
 from memory import Memory, Configuration, init_db, db_session
 from memory_utilities import get_config
 import time
 
-cogs = [Wake, Memory, Configuration]
+cogs = [Wake, Teryte, Memory, Configuration]
 
 
 Pythia = Bot(
